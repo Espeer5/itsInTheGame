@@ -54,7 +54,7 @@ def plot_qre(game, l_top, step):
     with step size step and save the resulting plot as qre.png, then 
     return the resulting p and q values as numpy arrays"""
     p, q = qre_curve(game, l_top, step)
-    plt.plot(p, q, 'o')
+    plt.plot(p, q, color='blue')
     plt.xlabel('p')
     plt.ylabel('q')
     plt.title('QRE Arc')
