@@ -11,6 +11,10 @@ class GameBoard:
     def __init__(self, row_payoff, col_payoff):
         self.row_player = row_payoff
         self.col_player = col_payoff
+
+    # Retrieve the payoff tuple for the row and col players given the row and column strategies
+    def __getitem__(self, key):
+        return (self.row_player[key[0]][key[1]], self.col_player[key[0]][key[1]])
     
     # Retrieve the row player's payoff matrix
     def get_row_matrix(self):
