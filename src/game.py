@@ -7,27 +7,29 @@ class GameBoard:
     """ This class represents a 2x2 game board. It contains independent payoff
     matrices for the row and column players giving their payoffs for each"""
 
-    # Initialize a 2x2 game board of all zeros
     def __init__(self, row_payoff, col_payoff):
+        """Initialize the game board with the payoff matrices for the row and
+        column players"""
         self.row_player = row_payoff
         self.col_player = col_payoff
 
-    # Retrieve the payoff tuple for the row and col players given the row and column strategies
     def __getitem__(self, key):
+        """Retrieve the payoff tuple given the row and column
+        strategies via indexing"""
         return (self.row_player[key[0]][key[1]], self.col_player[key[0]][key[1]])
     
-    # Retrieve the row player's payoff matrix
     def get_row_matrix(self):
+        """Retrieve the row player's payoff matrix"""
         return self.row_player
     
-    # Retrieve the column player's payoff matrix
     def get_col_matrix(self):
+        """Retrieve the column player's payoff matrix"""
         return self.col_player
     
-    # Retrieve the payoff for the row player given the row and column strategies
     def row_payoff(self, row_strat, col_strat):
+        """Retrieve the payoff for the row player given the row and column"""
         return self.row_player[row_strat][col_strat]
     
-    # Retrieve the payoff for the col player given the row and column strategies
     def col_payoff(self, row_strat, col_strat):
+        """Retrieve the payoff for the column player given the row and column"""
         return self.col_player[row_strat][col_strat]

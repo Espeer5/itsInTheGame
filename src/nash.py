@@ -3,8 +3,7 @@ object. The Nash solution is either pure or mixed strategy, in both cases
 represented as the probability of playing each strategy as a tuple of 
 (row player p(row = 1), col player p(col = 1))."""
 
-# Compute all pure nash equilibria solutions for a 2x2 game
-# Returns [] if no pure nash equilibria exist
+
 def pure_nash(game):
     """Compute all pure nash equilibria solutions for a 2x2 game
     Returns [] if no pure nash equilibria exist
