@@ -3,8 +3,6 @@ constains independent payoff matrices for the row and columm players giving
 their payoffs for each strategy.
 """
 
-import numpy as np
-
 class GameBoard:
     """ This class represents a 2x2 game board. It contains independent payoff
     matrices for the row and column players giving their payoffs for each"""
