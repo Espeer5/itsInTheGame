@@ -48,8 +48,8 @@ def qre_curve(game, l_top, step):
     lamb = np.arange(0, l_top, step)
     for l in lamb:
         a,b = qre(game, l)
-        p = np.append(p, b)
-        q = np.append(q, a)
+        p = np.append(p, a)
+        q = np.append(q, b)
     return p, q
 
 
