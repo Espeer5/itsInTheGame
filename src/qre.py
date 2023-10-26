@@ -1,7 +1,11 @@
 """ This module computes the quantal response equilibrium solution for a 2x2
 Game object. The QRE solution is represented as the probability of playing
 each strategy as a tuple of (row player p(row = 1), col player p(col = 1)) for 
-a given lambda parameter."""
+a given lambda parameter.
+
+This model is based directly on "Quantal Response Equilibrium for Normal Form 
+Games" by Richard McKelvey and Thomas Palfrey (1995).
+"""
 
 import numpy as np
 from scipy.optimize import fsolve

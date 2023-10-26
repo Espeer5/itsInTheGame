@@ -1,6 +1,10 @@
 """This module implements a poisson cognitive hierarchy solver for the set of 
 2x2 game matrices. The solver is able to solve pch for a series of poisson 
-parameter value and plot the resulting p and q curve."""
+parameter value and plot the resulting p and q curve.
+
+This model is implemmented from the paper "A Cognitive Hierarchy Model of Games"
+by Camerer, Ho, and Weigelt (2005).
+"""
 
 import numpy as np
 import math

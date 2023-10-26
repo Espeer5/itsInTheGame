@@ -1,7 +1,10 @@
 """ This module computes the Nash equilibrium solution for a 2x2 Game 
 object. The Nash solution is either pure or mixed strategy, in both cases 
 represented as the probability of playing each strategy as a tuple of 
-(row player p(row = 1), col player p(col = 1))."""
+(row player p(row = 1), col player p(col = 1)).
+
+This approach is based on the paper "Non-Cooperative Games" by John Nash (1951).
+"""
 
 
 def pure_nash(game):
