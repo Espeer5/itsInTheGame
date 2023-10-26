@@ -4,7 +4,6 @@ parameter value and plot the resulting p and q curve."""
 
 import numpy as np
 import math
-import matplotlib.pyplot as plt
 
 
 def poisson(k, t):
