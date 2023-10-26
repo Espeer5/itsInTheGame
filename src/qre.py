@@ -11,6 +11,7 @@ import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
 
+
 def qre(game, l):
     """ Computes a quantal response equilibrium solution for a 2x2 game for a given 
     lambda parameter, l. The QRE solution is represented as the probability of
