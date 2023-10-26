@@ -34,3 +34,23 @@ class GameBoard:
     def col_payoff(self, row_strat, col_strat):
         """Retrieve the payoff for the column player given the row and column"""
         return self.col_player[row_strat][col_strat]
+    
+    def __str__(self):
+        """Return a string representation of the game board"""
+        string = "|---------|----------|\n"
+        for row in range(2):
+            string += "|         |          |\n"
+            for col in range(2):
+                string += "|   {},{}   ".format(self.row_player[row][col], 
+                                           self.col_player[row][col])
+            string += " |\n|         |          |\n|---------|----------|\n"
+        return string
+
+
+if __name__ == '__main__':
+    import game
+    import numpy as np 
+    row = np.array([[1, 2], [3, 4]])
+    col = np.array([[5, 6], [7, 8]])
+    game = game.GameBoard(row, col)
+    print(game)
