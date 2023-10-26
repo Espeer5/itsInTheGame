@@ -10,3 +10,4 @@ behavior in 2x2 games.
 - GameBoard representation implemented
 - nash solver implemented
 - qre solver/curve solver implemented
+- PCH solver implemented
