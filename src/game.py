@@ -45,12 +45,3 @@ class GameBoard:
                                            self.col_player[row][col])
             string += " |\n|         |          |\n|---------|----------|\n"
         return string
-
-
-if __name__ == '__main__':
-    import game
-    import numpy as np 
-    row = np.array([[1, 2], [3, 4]])
-    col = np.array([[5, 6], [7, 8]])
-    game = game.GameBoard(row, col)
-    print(game)
