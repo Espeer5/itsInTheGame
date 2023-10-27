@@ -4,10 +4,6 @@ networks trained toplay 2x2 games. This population may then be used to simulate
 of the game theory models."""
 
 import torch
-import game
-import random as rand
-import numpy as np
-import nash
 import copy
 
 ITERS = 500
@@ -100,30 +96,12 @@ def train(g):
     return RowAgent, ColAgent
 
 
-if __name__ == "__main__":
-
-    # Create a random game with a mixed equilibrium
-    mixed_found = False
-    while not mixed_found:
-        row = np.array([[rand.randint(0, 10) for _ in range(2)] for _ in range(2)])
-        col = np.array([[rand.randint(0, 10) for _ in range(2)] for _ in range(2)])
-        g = game.GameBoard(row, col)
-        if nash.pure_nash(g) == []:
-            mixed = nash.mixed_nash(g)
-            if mixed[0] > 0 and mixed[0] < 1 and mixed[1] > 0 and mixed[1] < 1:
-                mixed_found = True
-
-
-    # Train the players
-    r, c = train(g)
-
-    # Sanity check - how do they play the game?
-    ins = game_to_input(g)
+def sim_data(game):
+    """Return simulated game play data for a given game matrix by training 
+    neural networks, and extracting and returning their play frequency"""
+    r, c = train(game)
+    ins = game_to_input(game)
     row_p = r(ins)
     col_p = c(ins)
-    print("Game Play results")
-    print(g)
-    print("p={}".format(row_p))
-    print("q={}".format(col_p))
-    print("Nash Eq: {}".format(nash.mixed_nash(g)))
+    return row_p.item(), col_p.item()
     
