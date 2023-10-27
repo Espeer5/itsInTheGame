@@ -44,4 +44,5 @@ if __name__ == "__main__":
     plt.savefig("mixed_models.png")
 
     print(g)
-    print(sim_data)
+    print("NN Play: {}".format(sim_data))
+    print("Nash: {}".format(nash.mixed_nash(g)))
