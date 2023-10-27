@@ -10,6 +10,7 @@ Games" by Richard McKelvey and Thomas Palfrey (1995).
 import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
+import utils
 
 
 def qre(game, l):
@@ -51,17 +52,31 @@ def qre_curve(game, l_top, step):
         a,b = qre(game, l)
         p = np.append(p, a)
         q = np.append(q, b)
-    return p, q
+    return (p, q), lamb
 
 
 def plot_qre(game, l_top, step):
     """Plot the qre curve for a range of lambda values from 0 to l_top 
     with step size step and save the resulting plot as qre.png, then 
     return the resulting p and q values as numpy arrays"""
-    p, q = qre_curve(game, l_top, step)
+    (p, q), _ = qre_curve(game, l_top, step)
     plt.plot(p, q, color='blue')
     plt.xlabel('p')
     plt.ylabel('q')
     plt.title('QRE Arc')
     plt.savefig('qre.png')
     return p, q
+
+
+def est_lmabda(game, sim_data):
+    """Estiate the lambda value for the qre prediction on a certain game using 
+    simulated data values"""
+    models, l = qre_curve(game, 10, 0.1)
+    errors = [utils.euclid_error(model, sim_data) for model in models]
+    return l[np.where(errors == min(errors))]
+
+
+def qre_est(game, sim_data):
+    """Estimate the qre solution for a given game using simulated data values"""
+    l = est_lmabda(game, sim_data)
+    return qre(game, l)

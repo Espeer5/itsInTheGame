@@ -8,6 +8,7 @@ by Camerer, Ho, and Weigelt (2005).
 
 import numpy as np
 import math
+import utils
 
 
 def poisson(k, t):
@@ -69,4 +70,18 @@ def pch_curve(game, top_k, t_bot, t_top, step):
         a, b = pch(game, top_k, i)
         p = np.append(p, a)
         q = np.append(q, b)
-    return p, q
+    return (p, q), t
+
+
+def estimate_tau(game, sim_data):
+    """Estimate the tau value for the poisson distribution on a given 
+    game using simulated data values"""
+    models, t = pch_curve(game, 10, 0.1, 5, 0.05)
+    errors = [utils.euclid_error(model, sim_data) for model in models]
+    return t[np.where(errors == min(errors))]
+
+
+def pch_est(game, sim_data):
+    """Estimate the pch solution for a given game using simulated data values"""
+    tau = estimate_tau(game, sim_data)
+    return pch(game, 10, tau)
