@@ -3,9 +3,10 @@ of different game theoretic models on 2x2 matrices."""
 
 import matplotlib.pyplot as plt
 
-import nash
-import qre
-import pch
+import game
+import solvers.nash as nash
+import solvers.qre as qre
+import solvers.pch as pch
 
 
 def plot_predictions(game, tau):
@@ -24,3 +25,10 @@ def plot_predictions(game, tau):
     plt.title('Model Predictions')
     plt.legend(loc='upper right')
     plt.savefig("mixed_models.png")
+
+
+if __name__ == "__main__":
+    row = [[8, 0], [0, 1]]
+    col = [[0, 1], [1, 0]]
+    g = game.GameBoard(row, col)
+    plot_predictions(g, 2)
