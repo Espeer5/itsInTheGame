@@ -10,7 +10,7 @@ Games" by Richard McKelvey and Thomas Palfrey (1995).
 import numpy as np
 from scipy.optimize import fsolve
 import matplotlib.pyplot as plt
-import utils
+import solvers.utils as utils
 
 
 def qre(game, l):
@@ -69,14 +69,14 @@ def plot_qre(game, l_top, step):
 
 
 def est_lmabda(game, sim_data):
-    """Estiate the lambda value for the qre prediction on a certain game using 
+    """Estimate the lambda value for the qre prediction on a certain game using 
     simulated data values"""
     models, l = qre_curve(game, 10, 0.1)
-    errors = [utils.euclid_error(model, sim_data) for model in models]
-    return l[np.where(errors == min(errors))]
+    errors = np.array([utils.euclid_error((models[0][i], models[1][i]), sim_data) for i in range(len(models[0]))])
+    return l[np.where(errors == min(errors))][0]
 
 
 def qre_est(game, sim_data):
     """Estimate the qre solution for a given game using simulated data values"""
-    l = est_lmabda(game, sim_data)
-    return qre(game, l)
+    l = round(est_lmabda(game, sim_data), 4)
+    return qre(game, l), l
