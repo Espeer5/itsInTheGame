@@ -11,3 +11,5 @@ behavior in 2x2 games.
 - nash solver implemented
 - qre solver/curve solver implemented
 - PCH solver implemented
+- Reinforcement learning/self play used to generate simulated data with neural networks
+- Parameters estimated from neural network data
