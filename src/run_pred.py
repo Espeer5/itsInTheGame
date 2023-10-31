@@ -9,6 +9,7 @@ import game
 from solvers import nash, qre, pch
 import data_sim.gen_pop as nn
 import matplotlib.pyplot as plt
+from distinguish.utils import disting
 
 if __name__ == "__main__":
 
@@ -47,3 +48,6 @@ if __name__ == "__main__":
     print(g)
     print("NN Play: {}".format(sim_data))
     print("Nash: {}".format(nash.mixed_nash(g)))
+    print("Distinguishability: {}".format(disting([(pch_p, pch_q), 
+                                                   (qre_p, qre_q), 
+                                                   (nash_p, nash_q)])))
