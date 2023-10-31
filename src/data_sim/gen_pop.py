@@ -5,6 +5,7 @@ each other on a given game matrix."""
 
 import torch
 import copy
+import matplotlib.pyplot as plt
 
 ITERS = 500
 
@@ -16,7 +17,6 @@ class GameAgent(torch.nn.Module):
         """Create a neural network to learn a 2x2"""
         super(GameAgent, self).__init__()
         self.hidden_layers = 8
-        print("Hidden Layers: {}".format(self.hidden_layers))
         self.fcl_s = torch.nn.ModuleList()
         self.fcl_s.append(torch.nn.Linear(input_dim, 8))
         for _ in range(self.hidden_layers):
@@ -61,7 +61,7 @@ def get_c_exp(row_p, col_p, game):
     return Cp_0_0 + Cp_0_1 + Cp_1_0 + Cp_1_1
 
 
-def train(g):
+def train(g, plot=False):
     """Trains a row network and column network by playing them against each 
     other in a 2x2 game for ITER rounds"""
 
@@ -73,6 +73,9 @@ def train(g):
     RowOpt = torch.optim.Adam(RowAgent.parameters(), lr=0.001)
     ColOpt = torch.optim.Adam(ColAgent.parameters(), lr=0.001)
 
+    row_p_series = []
+    col_p_series = []
+
     # Run the training loop
     for i in range(ITERS):
 
@@ -80,6 +83,9 @@ def train(g):
         ins_2 = copy.deepcopy(ins_1)
         row_p = RowAgent(ins_1)
         col_p = ColAgent(ins_2)
+
+        row_p_series.append(row_p.item())
+        col_p_series.append(col_p.item())
 
         # Backpropagate the loss in an alternating fashion
         if i % 2 == 0:
@@ -92,14 +98,23 @@ def train(g):
             ColOpt.zero_grad()
             col_l.backward()
             ColOpt.step()
+    if plot:
+        plt.plot(row_p_series, col_p_series)
+        plt.xlim((0, 1))
+        plt.ylim((0, 1))
+        plt.xlabel("p (Row Agent Play)")
+        plt.ylabel("q (Col Agent Play)")
+        plt.title("Agent Training Trajectory")
+        plt.savefig("trainTraj.png")
+        plt.clf()
     
     return RowAgent, ColAgent
 
 
-def sim_data(game):
+def sim_data(game, plot=False):
     """Return simulated game play data for a given game matrix by training 
     neural networks, and extracting and returning their play frequency"""
-    r, c = train(game)
+    r, c = train(game, plot)
     ins = game_to_input(game)
     row_p = r(ins)
     col_p = c(ins)

@@ -24,7 +24,7 @@ if __name__ == "__main__":
                 board_found = True
 
     # Generate simulated data on the game board
-    sim_data = nn.sim_data(g)
+    sim_data = nn.sim_data(g, plot=True)
 
     # Generate predictions of the models using the simulated data
     (pch_p, pch_q), t = pch.pch_est(g, sim_data)
@@ -42,6 +42,7 @@ if __name__ == "__main__":
     plt.title('Model Predictions')
     plt.legend(loc='upper right')
     plt.savefig("mixed_models.png")
+    plt.clf()
 
     print(g)
     print("NN Play: {}".format(sim_data))
