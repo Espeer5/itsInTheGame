@@ -4,9 +4,16 @@ be (.5, .5). The best response is given by the same as the first step in Poisson
 CH solver.
 """
 
-def level_1(game):
+import solvers.utils
+
+def level_1(game, alpha=None):
     """Returns the p and q values for a given game as a best response to level 
     0 (random mixing) play."""
+
+    # If risk aversion parameter alpha given, transform game matrix
+    if alpha:
+        game = solvers.utils.tranform_game(game, alpha)
+
     p_0 = [(0.5, 0.5)]
     q_0 = [(0.5, 0.5)]
 

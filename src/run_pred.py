@@ -6,7 +6,7 @@ other."""
 
 import numpy as np
 import game
-from solvers import nash, qre, pch
+from solvers import nash, qre, pch, level1
 import data_sim.gen_pop as nn
 import matplotlib.pyplot as plt
 from distinguish.utils import disting
@@ -28,8 +28,10 @@ if __name__ == "__main__":
     sim_data = nn.sim_data(g, plot=True)
 
     # Generate predictions of the models using the simulated data
+    (pch_p_a2, pch_q_a2), t_a = pch.pch_est(g, sim_data, alpha=2)
     (pch_p, pch_q), t = pch.pch_est(g, sim_data)
     (qre_p, qre_q), l = qre.qre_est(g, sim_data)
+    (l1_p, l1_q) = level1.level_1(g, alpha=2)
     nash_p, nash_q = nash.mixed_nash(g)
     tock = time.time()
     print(tock - tick)
@@ -38,6 +40,8 @@ if __name__ == "__main__":
     plt.plot(pch_p, pch_q, 'ro', label='PCH t={}'.format(round(t, 4)))
     plt.plot(qre_p, qre_q, 'bo', label='QRE lambda={}'.format(round(l, 4)))
     plt.plot(nash_p, nash_q, 'go', label='Nash Equilibrium')
+    plt.plot(pch_p_a2, pch_q_a2, 'yo', label='PCH alpha=2')
+    plt.plot(l1_p, l1_q, 'ko', label='Level 1 alpha=2')
     plt.xlim((0, 1))
     plt.ylim((0, 1))
     plt.xlabel('p')

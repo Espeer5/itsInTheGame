@@ -22,9 +22,14 @@ def g_k(h, k, t):
     return (poisson(h, t) / sum([poisson(l, t) for l in range(0, k)]))
 
 
-def pch(game, top_k, t):
+def pch(game, top_k, t, alpha=None):
     """Returns the p and q values for a given game, poisson parameter t, and 
        maximum number of levels of thinking top_k"""
+    
+    # If risk aversion parameter alpha given, transform game matrix
+    if alpha:
+        game = utils.tranform_game(game, alpha)
+
     p_s = [(0.5, 0.5)]
     q_s = [(0.5, 0.5)]
     for k in range(1, top_k):
@@ -81,7 +86,7 @@ def estimate_tau(game, sim_data):
     return l[np.where(errors == min(errors))][0]
 
 
-def pch_est(game, sim_data):
+def pch_est(game, sim_data, alpha=None):
     """Estimate the pch solution for a given game using simulated data values"""
     tau = estimate_tau(game, sim_data)
-    return pch(game, 10, tau), tau
+    return pch(game, 10, tau, alpha=alpha), tau
