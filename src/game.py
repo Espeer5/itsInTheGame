@@ -54,7 +54,7 @@ def payoffs_from_params(params):
 
     Returns (row_payoffs, col_payoffs) each element a 2x2 np array.
 
-    A game board constructed in this way ensures a uniquely determined,
+    A game board constructed in this way should ensure a uniquely determined,
     completely mixed Nash equilibrium.'''
     row_payoffs = np.array([[params[0] + params[4], params[1]],
                             [params[0], params[1] + params[5]]]).reshape(2,2)

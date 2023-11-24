@@ -6,10 +6,10 @@ the parameter necessary for computing predictions for QRE, level-1(alpha), and P
 We utilize the module scipy.optimize to compute the optimization.
 '''
 
-from ..data_sim import gen_pop as nn
-from .. import game
-from ..solvers import nash, qre, pch
-from ..distinguish.utils import disting
+import data_sim.gen_pop as nn
+import game
+from solvers import nash, qre, pch
+from distinguish.utils import disting
 import scipy.optimize as opt
 
 def dist_from_params(params):

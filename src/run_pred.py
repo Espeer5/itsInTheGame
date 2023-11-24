@@ -14,6 +14,7 @@ import time
 
 if __name__ == "__main__":
     # Create a game board (currently random) with mixed nash prediction
+    tick = time.time()
     board_found = False
     while not board_found:
         row = np.random.randint(0, 5, size=(2, 2))
@@ -23,7 +24,6 @@ if __name__ == "__main__":
             mn = nash.mixed_nash(g)
             if mn[0] > 0 and mn[0] < 1 and mn[1] > 0 and mn[1] < 1:
                 board_found = True
-    tick = time.time()
     # Generate simulated data on the game board
     sim_data = nn.sim_data(g, plot=True)
 
