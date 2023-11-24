@@ -28,20 +28,20 @@ if __name__ == "__main__":
     sim_data = nn.sim_data(g, plot=True)
 
     # Generate predictions of the models using the simulated data
-    (pch_p_a2, pch_q_a2), t_a = pch.pch_est(g, sim_data, alpha=2)
-    (pch_p, pch_q), t = pch.pch_est(g, sim_data)
+    (pch_p_a2, pch_q_a2), (t_t, t_a) = pch.pch_est(g, sim_data, alpha=True)
+    (pch_p, pch_q), (t, _) = pch.pch_est(g, sim_data)
     (qre_p, qre_q), l = qre.qre_est(g, sim_data)
-    (l1_p, l1_q) = level1.level_1(g, alpha=2)
+    (l1_p, l1_q), l1_a = level1.level1_est(g, sim_data)
     nash_p, nash_q = nash.mixed_nash(g)
     tock = time.time()
     print(tock - tick)
 
     # Plot the predictions of the models
-    plt.plot(pch_p, pch_q, 'ro', label='PCH t={}'.format(round(t, 4)))
-    plt.plot(qre_p, qre_q, 'bo', label='QRE lambda={}'.format(round(l, 4)))
+    plt.plot(pch_p, pch_q, 'ro', label='PCH t={}'.format(round(t, 2)))
+    plt.plot(qre_p, qre_q, 'bo', label='QRE lambda={}'.format(round(l, 3)))
     plt.plot(nash_p, nash_q, 'go', label='Nash Equilibrium')
-    plt.plot(pch_p_a2, pch_q_a2, 'yo', label='PCH alpha=2')
-    plt.plot(l1_p, l1_q, 'ko', label='Level 1 alpha=2')
+    plt.plot(pch_p_a2, pch_q_a2, 'yo', label='PCH_a alpha={}, t={}'.format(round(t_a, 2), round(t_t, 2)))
+    plt.plot(l1_p, l1_q, 'ko', label='Level 1 alpha={}'.format(round(l1_a, 2)))
     plt.xlim((0, 1))
     plt.ylim((0, 1))
     plt.xlabel('p')

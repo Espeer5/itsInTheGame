@@ -9,6 +9,7 @@ by Camerer, Ho, and Weigelt (2005).
 import numpy as np
 import math
 import solvers.utils as utils
+import scipy.optimize as opt
 
 
 def poisson(k, t):
@@ -78,15 +79,16 @@ def pch_curve(game, top_k, t_bot, t_top, step):
     return (p, q), t
 
 
-def estimate_tau(game, sim_data):
-    """Estimate the tau value for the poisson distribution on a given 
-    game using simulated data values"""
-    models, l = pch_curve(game, 10, 1, 5, 0.1)
-    errors = np.array([utils.euclid_error((models[0][i], models[1][i]), sim_data) for i in range(len(models[0]))])
-    return l[np.where(errors == min(errors))][0]
-
-
 def pch_est(game, sim_data, alpha=None):
     """Estimate the pch solution for a given game using simulated data values"""
-    tau = estimate_tau(game, sim_data)
-    return pch(game, 10, tau, alpha=alpha), tau
+    if not alpha:
+        def e_func(t):
+            return utils.euclid_error(pch(game, 10, t), sim_data)
+        tau = opt.minimize(e_func, 0, bounds=[(0, None)]).x[0]
+    else:
+        test_args = [(t, a) for t in np.arange(0, 5, 0.1) for 
+                     a in np.arange(.05, 1, 0.05)]
+        def e_func(params):
+            return utils.euclid_error(pch(game, 10, params[0], alpha=params[1]), sim_data)
+        tau, alpha = min(test_args, key=e_func)
+    return pch(game, 10, tau, alpha=alpha), (tau, alpha)
