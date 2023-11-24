@@ -3,6 +3,7 @@ constains independent payoff matrices for the row and columm players giving
 their payoffs for each strategy.
 """
 
+import numpy as np
 
 class GameBoard:
     """ This class represents a 2x2 game board. It contains independent payoff
@@ -45,3 +46,19 @@ class GameBoard:
                                            self.col_player[row][col])
             string += " |\n|         |          |\n|---------|----------|\n"
         return string
+    
+def payoffs_from_params(params):
+    '''Parameterization of 2x2 board taken from Selten Chmura.
+    params is a tuple of floats (al,ar,bu,bd,cl,cr,du,dd).
+    a's and b's >= 0, c's and d's > 0.
+
+    Returns (row_payoffs, col_payoffs) each element a 2x2 np array.
+
+    A game board constructed in this way ensures a uniquely determined,
+    completely mixed Nash equilibrium.'''
+    row_payoffs = np.array([[params[0] + params[4], params[1]],
+                            [params[0], params[1] + params[5]]]).reshape(2,2)
+    col_payoffs = np.array([[params[2], params[2] + params[6],
+                             params[3] + params[7], params[3]]]).reshape(2,2)
+    return (row_payoffs, col_payoffs)
+

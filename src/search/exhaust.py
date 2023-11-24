@@ -5,5 +5,52 @@ the parameter necessary for computing predictions for QRE, level-1(alpha), and P
 
 Games above a certain threshold of distinguishability are chosen as candidates for further
 investigation.
-
 '''
+
+from ..data_sim import gen_pop as nn
+from .. import game
+from ..solvers import nash, qre, pch
+from ..distinguish.utils import disting
+import itertools
+
+def exhaustive_search(upper_bound, min_dist):
+    '''Performs an exhaustive search over games with parameters up to int upper_bound.
+    Don't use upper_bound > 3 unless you want to be sitting here for hundreds of hours.
+    
+    Returns list of "candidate" games with distinguishability exceeding float min_dist'''
+    # generate game board
+    # sim data on board
+    # est params (and p*,q*) from data
+    # compute distinguishability
+    # add to candidate list or reject
+    # return list of candidate game objects
+    candidates = []
+    ub = upper_bound+1
+    iters = [range(ub), range(ub), range(ub), range(ub),
+             range(1,ub), range(1,ub), range(1,ub), range(1,ub)]
+    games = list(itertools.product(*iters))
+    for i in range(len(games)):
+
+        # Create game and simulate play
+        (row_payoffs, col_payoffs) = game.payoffs_from_params(games[i])
+        temp_game = game.GameBoard(row_payoffs, col_payoffs)
+        sim_data = nn.sim_data(temp_game, plot=False)
+
+        # Generate predictions of the models using the simulated data
+        (pch_p, pch_q), t = pch.pch_est(temp_game, sim_data)
+        (qre_p, qre_q), l = qre.qre_est(temp_game, sim_data)
+        nash_p, nash_q = nash.mixed_nash(temp_game)
+
+        # Compute distinguishability
+        dist = disting([(pch_p, pch_q), (qre_p, qre_q), (nash_p, nash_q)])
+        if dist >= min_dist:
+            print(dist)
+            candidates.append(temp_game)
+        
+    return candidates
+
+if __name__ == "__main__":
+    exhaustive_search(2, 0.25)
+
+
+    
