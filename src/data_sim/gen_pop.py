@@ -7,7 +7,7 @@ import torch
 import copy
 import matplotlib.pyplot as plt
 
-ITERS = 500
+ITERS = 300
 
 class GameAgent(torch.nn.Module):
     """A neural network which learns to be either the row or column player 
@@ -119,4 +119,3 @@ def sim_data(game, plot=False):
     row_p = r(ins)
     col_p = c(ins)
     return row_p.item(), col_p.item()
-    

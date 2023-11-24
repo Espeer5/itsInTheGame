@@ -11,19 +11,27 @@ import game
 from solvers import nash, qre, pch
 from distinguish.utils import disting
 import scipy.optimize as opt
+import numpy as np
 
 def dist_from_params(params):
     (row_payoffs, col_payoffs) = game.payoffs_from_params(params)
     g = game.GameBoard(row_payoffs, col_payoffs)
-    sim_data = nn.sim_data(g, plot=False)
+    if nash.pure_nash(g) == []: # check if it has pure nash just in case
+            mn = nash.mixed_nash(g)
+            if mn[0] > 0 and mn[0] < 1 and mn[1] > 0 and mn[1] < 1:
+                sim_data = nn.sim_data(g, plot=False)
 
-    # Generate predictions of the models using the simulated data
-    (pch_p, pch_q), t = pch.pch_est(g, sim_data)
-    (qre_p, qre_q), l = qre.qre_est(g, sim_data)
-    nash_p, nash_q = nash.mixed_nash(g)
+                # Generate predictions of the models using the simulated data
+                (pch_p, pch_q), t = pch.pch_est(g, sim_data)
+                (qre_p, qre_q), l = qre.qre_est(g, sim_data)
+                nash_p, nash_q = nash.mixed_nash(g)
 
-    # Return 1/distinguishability to use for minimization
-    return 1/disting([(pch_p, pch_q), (qre_p, qre_q), (nash_p, nash_q)])
+                dist = disting([(pch_p, pch_q), (qre_p, qre_q), (nash_p, nash_q)])
+                print(dist)
+
+                # Return 1/distinguishability to use for minimization
+                return 1/dist
+    return np.inf
 
 def opt_search(upper_bound):
     '''Performs a search over games with parameters up to float upper_bound via optimization.
@@ -31,9 +39,9 @@ def opt_search(upper_bound):
     Returns a game object with the "maximally distinguishable" game and the distinguishability
     of that game'''
     ub = upper_bound
-    x0 = (ub/2,ub/2,ub/2,ub/2,ub,ub,ub,ub)
+    x0 = (ub,ub/2,ub/3,ub/4,ub/4,ub/3,ub/2,ub)
     param_bounds = [(0,ub), (0,ub), (0,ub), (0,ub), (1,ub), (1,ub), (1,ub), (1,ub)]
-    result = opt.minimize(dist_from_params, x0, method=None, bounds=param_bounds) # not rlly sure what to use for method??
+    result = opt.minimize(dist_from_params, x0, method=None, bounds=param_bounds, options={'maxiter':100}) # not rlly sure what to use for method??
     (row_payoffs, col_payoffs) = game.payoffs_from_params(result.x)
     opt_game = game.GameBoard(row_payoffs, col_payoffs)
     return opt_game
