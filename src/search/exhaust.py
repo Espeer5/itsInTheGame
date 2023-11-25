@@ -49,6 +49,6 @@ def exhaustive_search(upper_bound, min_dist):
                 dist = disting([(pch_p, pch_q), (qre_p, qre_q), (nash_p, nash_q)])
                 if dist >= min_dist:
                     print(dist)
-                    candidates.append(temp_game)
+                    candidates.append((temp_game, dist))
         
     return candidates    
