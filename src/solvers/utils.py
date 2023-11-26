@@ -10,7 +10,7 @@ def euclid_error(model, data):
     return math.sqrt((model[1] - data[1])**2 + (model[0] - data[0])**2)
 
 
-def tranform_game(game, alpha):
+def transform_game(game, alpha):
     """Transforms the game matrix by alpha according to Fudenberg, Liang 2019"""
     row_matrix = game.get_row_matrix()
     col_matrix = game.get_col_matrix()

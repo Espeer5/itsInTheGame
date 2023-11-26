@@ -13,7 +13,7 @@ def level_1(game, alpha=None):
 
     # If risk aversion parameter alpha given, transform game matrix
     if alpha:
-        game = solvers.utils.tranform_game(game, alpha)
+        game = solvers.utils.transform_game(game, alpha)
 
     p_0 = [(0.5, 0.5)]
     q_0 = [(0.5, 0.5)]

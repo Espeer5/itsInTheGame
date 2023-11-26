@@ -29,7 +29,7 @@ def pch(game, top_k, t, alpha=None):
     
     # If risk aversion parameter alpha given, transform game matrix
     if alpha:
-        game = utils.tranform_game(game, alpha)
+        game = utils.transform_game(game, alpha)
 
     p_s = [(0.5, 0.5)]
     q_s = [(0.5, 0.5)]

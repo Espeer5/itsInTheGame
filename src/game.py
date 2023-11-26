@@ -5,6 +5,24 @@ their payoffs for each strategy.
 
 import numpy as np
 
+
+def pad(str, length):
+    """Pad a string with spaces to the given length as evenly as possible. If 
+    the difference between the length of the string and the desired length is
+    odd, the extra space will be added to the right side of the string."""
+    diff = length - len(str)
+    if diff == 0:
+        return str
+    elif diff == 1:
+        return str + " "
+    elif diff == 2:
+        return " " + str + " "
+    elif diff % 2 == 0:
+        return " " * (diff // 2) + str + " " * (diff // 2)
+    else:
+        return " " * (diff // 2) + str + " " * (diff // 2 + 1)
+
+
 class GameBoard:
     """ This class represents a 2x2 game board. It contains independent payoff
     matrices for the row and column players giving their payoffs for each"""
@@ -38,15 +56,24 @@ class GameBoard:
     
     def __str__(self):
         """Return a string representation of the game board"""
-        string = "|---------|----------|\n"
-        for row in range(2):
-            string += "|         |          |\n"
-            for col in range(2):
-                string += "|   {},{}   ".format(self.row_player[row][col], 
-                                           self.col_player[row][col])
-            string += " |\n|         |          |\n|---------|----------|\n"
-        return string
+        rcs = [f'{self.row_player[0][0]:.2f}, {self.col_player[0][0]:.2f}',
+               f'{self.row_player[0][1]:.2f}, {self.col_player[0][1]:.2f}',
+               f'{self.row_player[1][0]:.2f}, {self.col_player[1][0]:.2f}',
+               f'{self.row_player[1][1]:.2f}, {self.col_player[1][1]:.2f}']
+        conlen = max([len(rc) for rc in rcs])
+        return ("|" + "-" * (conlen + 4) + "|" + "-" * (conlen + 4) + "|\n" +
+                "|" + " " * (conlen + 4) + "|" + " " * (conlen + 4) + "|\n" +
+                "|" + "  " + pad(rcs[0], conlen) + "  |  " + 
+                  pad(rcs[1], conlen) + "  |\n" +
+                "|" + " " * (conlen + 4) + "|" + " " * (conlen + 4) + "|\n" +
+                "|" + "-" * (conlen + 4) + "|" + "-" * (conlen + 4) + "|\n" +
+                "|" + " " * (conlen + 4) + "|" + " " * (conlen + 4) + "|\n" +
+                "|" + "  " + pad(rcs[2], conlen) + "  |  " + 
+                  pad(rcs[3], conlen) + "  |\n" +
+                "|" + " " * (conlen + 4) + "|" + " " * (conlen + 4) + "|\n" +
+                "|" + "-" * (conlen + 4) + "|" + "-" * (conlen + 4) + "|\n")
     
+
 def payoffs_from_params(params):
     '''Parameterization of 2x2 board taken from Selten Chmura.
     params is a tuple of floats (al,ar,bu,bd,cl,cr,du,dd).
