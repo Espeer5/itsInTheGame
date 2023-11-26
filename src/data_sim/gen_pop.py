@@ -9,6 +9,7 @@ import copy
 import matplotlib.pyplot as plt
 
 ITERS = 300
+HIDDEN_LAYERS = 8
 
 class GameAgent(torch.nn.Module):
     """A neural network which learns to be either the row or column player 
@@ -17,7 +18,7 @@ class GameAgent(torch.nn.Module):
     def __init__(self, input_dim, output_dim):
         """Create a neural network to learn a 2x2"""
         super(GameAgent, self).__init__()
-        self.hidden_layers = 8
+        self.hidden_layers = HIDDEN_LAYERS
         self.fcl_s = torch.nn.ModuleList()
         self.fcl_s.append(torch.nn.Linear(input_dim, 8))
         for i in range(self.hidden_layers):

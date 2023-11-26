@@ -62,3 +62,11 @@ def payoffs_from_params(params):
                              params[3] + params[7], params[3]]]).reshape(2,2)
     return (row_payoffs, col_payoffs)
 
+
+def rand_game():
+    '''Returns a random 2x2 game board with a unique mixed Nash equilibrium.
+    using the parameterization from Selten Chmura. Useful for testing purposes'''
+    params = np.random.rand(8)
+    params[4:] += 1
+    params[2:4] += 1
+    return GameBoard(*payoffs_from_params(params))
