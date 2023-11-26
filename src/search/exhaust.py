@@ -51,4 +51,4 @@ def exhaustive_search(upper_bound, min_dist):
                     print(dist)
                     candidates.append((temp_game, dist))
         
-    return candidates    
+    return candidates

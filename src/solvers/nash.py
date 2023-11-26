@@ -11,9 +11,9 @@ def pure_nash(game):
     """Compute all pure nash equilibria solutions for a 2x2 game
     Returns [] if no pure nash equilibria exist
     """
-    r_maxes = [max(game.get_row_matrix()[r]) for r in range(2)]
+    r_maxes = [max([(game.get_row_matrix()[r][c]) for r in range(2)]) for c in range(2)]
     c_maxes = [max([game.get_col_matrix()[r][c] 
-                    for r in range(2)]) for c in range(2)]
+                    for c in range(2)]) for r in range(2)]
     equilibria = []
     for i in range(2):
         for j in range(2):
@@ -31,6 +31,7 @@ def mixed_nash(game):
     try:
         assert(pure_nash(game) == [])
     except AssertionError:
+        print(pure_nash(game))
         raise ValueError("Game has pure nash equilibria")
     
     # Compute the mixed nash equilibrium
