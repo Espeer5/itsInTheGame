@@ -53,5 +53,4 @@ def exhaustive_search(search_space):
                          (l1_p, l1_q)])
         dists.append(dist)
     max = np.argmax(dists)
-    print(search_space[max])
     return dists[max], search_space[max], params[max]
