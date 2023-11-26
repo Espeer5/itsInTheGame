@@ -21,10 +21,7 @@ def plot_predictions(game, top_k, tau, lamb, alpha_pch, alpha_l1):
     plt.ylim((-0.1, 1.4))
     plt.xlabel('p')
     plt.ylabel('q')
-    plt.title('Model Predictions, dist={:.2f}'.format(disting([(pch_p, pch_q),
-                                                                (qre_p, qre_q),
-                                                                (ne_p, ne_q),
-                                                                (l1_p, l1_q)])))
+    plt.title('Model Predictions')
     plt.legend(loc='upper right')
     plt.savefig("mixed_models.png")
     plt.cla()
