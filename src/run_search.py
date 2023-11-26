@@ -23,4 +23,7 @@ if __name__ == "__main__":
     print("Most distinguishable matrix:")
     print(opt_mat)
     print("Distinguishability: {}".format(dist))
+    print("PCH: t={}, a={}".format(t, a_pch))
+    print("QRE: l={}".format(l))
+    print("Level 1: a={}".format(a_l1))
     plot_predictions(opt_mat, 10, t, l, a_pch, a_l1)
