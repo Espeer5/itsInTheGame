@@ -18,7 +18,7 @@ def pure_nash(game):
     for i in range(2):
         for j in range(2):
             scores = game[i, j]
-            if scores[0] == r_maxes[i] and scores[1] == c_maxes[j]:
+            if scores[0] == r_maxes[j] and scores[1] == c_maxes[i]:
                 equilibria.append((i,j))
     return equilibria
 

@@ -13,11 +13,9 @@ from solvers import nash, qre, pch
 from distinguish.utils import disting
 import itertools
 
-def exhaustive_search(upper_bound, min_dist):
-    '''Performs an exhaustive search over games with parameters up to int upper_bound.
-    Don't use upper_bound > 3 unless you want to be sitting here for hundreds of hours.
-    
-    Returns list of "candidate" games with distinguishability exceeding float min_dist'''
+def exhaustive_search(search_space):
+    '''Performs an exhaustive search over games passed directly in the 
+    search_space list. Performs data simulation '''
     # generate game board
     # sim data on board
     # est params (and p*,q*) from data

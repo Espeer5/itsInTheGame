@@ -4,6 +4,7 @@ the row player, and one for the column player, and iteratively playing against
 each other on a given game matrix."""
 
 import torch
+import torch.nn.init as init
 import copy
 import matplotlib.pyplot as plt
 
@@ -19,7 +20,8 @@ class GameAgent(torch.nn.Module):
         self.hidden_layers = 8
         self.fcl_s = torch.nn.ModuleList()
         self.fcl_s.append(torch.nn.Linear(input_dim, 8))
-        for _ in range(self.hidden_layers):
+        for i in range(self.hidden_layers):
+            init.kaiming_normal_(self.fcl_s[i].weight)
             self.fcl_s.append(torch.nn.Linear(8,8))
         self.fcl_s.append(torch.nn.Linear(8, output_dim))
 

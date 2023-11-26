@@ -48,10 +48,4 @@ def opt_search(upper_bound):
     (row_payoffs, col_payoffs) = game.payoffs_from_params(result.x)
     opt_game = game.GameBoard(row_payoffs, col_payoffs)
     return opt_game
-
-
-if __name__ == "__main__":
-    g = opt_search(5)
-    print(g)
-    plot.plot_predictions(g, TOP_K, T, LAMB, ALPHA)
     
